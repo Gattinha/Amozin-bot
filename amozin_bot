@@ -1,0 +1,58 @@
+from telegram.ext.updater import Updater
+from telegram.update import Update
+from telegram.ext.callbackcontext import CallbackContext
+from telegram.ext.commandhandler import CommandHandler
+from telegram.ext.messagehandler import MessageHandler
+from telegram.ext.filters import Filters
+import numpy as np
+
+
+def callback_auto_message(context):
+    context.bot.send_message(chat_id='context.job.context', text='To cum muitas saudadiiiiiissss 🥰🥰🥰😘😘😘😍😍🥰🥰😘')
+
+
+def start_auto_messaging(update, context):
+    chat_id = update.message.chat_id
+    context.job_queue.run_repeating(callback_auto_message, 10, context=chat_id, name=str(chat_id))
+    # context.job_queue.run_once(callback_auto_message, 3600, context=chat_id)
+    # context.job_queue.run_daily(callback_auto_message, time=datetime.time(hour=9, minute=22), days=(0, 1, 2, 3, 4, 5, 6), context=chat_id)
+
+
+def stop_notify(update, context):
+    chat_id = update.message.chat_id
+    context.bot.send_message(chat_id=chat_id, text='Stopping automatic messages!')
+    job = context.job_queue.get_jobs_by_name(str(chat_id))
+    job[0].schedule_removal() 
+
+def main():
+
+dispatcher.add_handler(CommandHandler("sdds", start_auto_messaging))
+dispatcher.add_handler(CommandHandler("stop", stop_notify))
+
+ # Create the Updater and pass it your bot's token.
+    token = '5725480727:AAEi6lXGnvJzQMPm0R76Uss8HWtdhnmWdFY'
+    
+        # initiliaze class that contains the callback functions for caronas
+    updater = Updater(token=token, use_context=True)
+
+    # Get the dispatcher to register handlers
+    dispatcher = updater.dispatcher
+
+    # on different commands - answer in Telegram
+        dispatcher.add_handler
+        (CommandHandler("sdds", start_auto_messaging))
+dispatcher.add_handler(CommandHandler("stop", stop_notify))
+
+  
+    # Start the Bot
+    updater.start_polling()
+
+    # Block until the user presses Ctrl-C or the process receives SIGINT,
+    # SIGTERM or SIGABRT. This should be used most of the time, since
+    # start_polling() is non-blocking and will stop the bot gracefully.
+    updater.idle()
+
+
+if __name__ == '__main__':
+    print("press CTRL + C to cancel.")
+    main()
